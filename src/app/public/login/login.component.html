@@ -1,13 +1,38 @@
 <div class="login-container">
+  <form [formGroup]="loginForm" class="form-container">
+    <!-- {{passwordControl.errors | json }} -->
+    <!-- {{loginForm  |json}} -->
 
-  <form class="form-container">
     <mat-form-field appearance="fill">
-    <mat-label>login</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>password</mat-label>
-    <input matInput>
-  </mat-form-field>
-</form>
+      <mat-label>User</mat-label>
+      <input matInput name="user" formControlName="user" />
+      <div *ngIf="userControl.invalid && userControl.touched">
+        <mat-error *ngIf="userControl.errors?.['required']"
+          >El nombre es obligatorio</mat-error
+        >
+        <mat-error *ngIf="userControl.errors?.['pattern']"
+        >La direccion de usuario no es valida xxxxx@xxxxx.xxx</mat-error
+      >
+      </div>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        name="password"
+        type="password"
+        formControlName="password"
+      />
+      <div *ngIf="passwordControl.invalid && passwordControl.touched">
+        <mat-error *ngIf="passwordControl.errors?.['required']"
+          >El password es obligatorio</mat-error
+        >
+        <mat-error *ngIf="passwordControl.errors?.['minlength']"
+          >La longitud de la password debe ser al menos
+          {{passwordControl.errors?.['minlength']?.requiredLength}} caracteres
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="login()">Login</button>
+  </form>
 </div>

@@ -7,4 +7,9 @@
   <button mat-button routerLinkActive="selected" routerLink="/galeria">Galería</button>
   <button mat-button routerLinkActive="selected" routerLink="/crud">CRUD</button>
   <button mat-button routerLinkActive="selected" routerLink="/profile">Profile</button>
+
+  <span class="mat-h6">Hola, {{currentUserName}}</span>
+  <button mat-icon-button aria-label="Logout" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>

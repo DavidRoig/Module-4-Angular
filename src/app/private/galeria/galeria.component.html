@@ -1,1 +1,61 @@
-<p>galeria works!</p>
+<div class="galeria-container">
+  <span class="mat-title">Galeria</span>
+  <div class="image-main">
+    <img #imageSelected [src]="getCurrentUrl()" />
+  </div>
+  <div class="image-list">
+    <img
+      *ngFor="let image of imageList; index as i"
+      (click)="imageGalerySelected(i)"
+      [src]="image?.src"
+      [ngClass]="{'selected': i==imageSelectedIndex}"
+      class="image-item"
+      alt="miniatura de imagen"
+    />
+  </div>
+  <div class="image-actions">
+    <button
+      mat-icon-button
+      aria-label="Back"
+      (click)="backImage()"
+      [disabled]="imageSelectedIndex === selectedIndexInitial"
+    >
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Next"
+      (click)="nextImage()"
+      [disabled]="imageSelectedIndex === imageList.length - 1"
+    >
+      <mat-icon>navigate_next</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="ZoomIn" (click)="zoomIn()">
+      <mat-icon>zoom_in</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="ZoomOut"
+      (click)="zoomOut()"
+      [disabled]="zoomLevel === 1"
+    >
+      <mat-icon>zoom_out</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Play"
+      (click)="play()"
+      [disabled]="isPlaying"
+    >
+      <mat-icon>play_circle_fill</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Stop"
+      (click)="stop()"
+      [disabled]="!isPlaying"
+    >
+      <mat-icon>stop_circle</mat-icon>
+    </button>
+  </div>
+</div>

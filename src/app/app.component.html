@@ -1,5 +1,5 @@
-<app-public-navbar></app-public-navbar>
-<app-private-navbar></app-private-navbar>
+<app-public-navbar *ngIf="!isUserLogged"></app-public-navbar>
+<app-private-navbar *ngIf="isUserLogged"></app-private-navbar>
 <section class="main">
   <router-outlet></router-outlet>
 </section>

@@ -1,0 +1,27 @@
+:root {
+  --zoom: 1;
+}
+
+
+.image-main {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+
+  img {
+    transition: transform ease 0.3s;
+    transform: scale(var(--zoom));
+
+  }
+  .selected{
+    border:1px solid red;
+  }
+}
+.image-list {
+  display: flex;
+  width: 600px;
+
+  .image-item {
+    max-width: 80px;
+  }
+}
