@@ -11,8 +11,10 @@ import {
 })
 export class GaleriaComponent {
   private readonly intervalTime = 2000;
+  readonly sliderPageSize = 3;
   private imageInterval: any;
   readonly selectedIndexInitial = 0;
+  sliderPage = 0;
   zoomLevel = 1;
   isPlaying: boolean = false;
   imageList: Image[];
@@ -24,8 +26,8 @@ export class GaleriaComponent {
     this.imageList = imageProviderService.getList();
   }
 
-  imageGalerySelected(imageIndexSelected: number): void {
-    this.imageSelectedIndex = imageIndexSelected;
+  imageGalerySelected(image: Image): void {
+    this.imageSelectedIndex = this.imageList.indexOf(image);
   }
 
   nextImage() {
@@ -68,8 +70,17 @@ export class GaleriaComponent {
     this.togglePlaying();
     clearInterval(this.imageInterval);
   }
+
   private togglePlaying() {
     this.isPlaying = !this.isPlaying;
   }
+
   getCurrentUrl = (): string => this.imageList[this.imageSelectedIndex]?.src;
+
+  nextSlider() {
+    this.sliderPage += this.sliderPageSize;
+  }
+  backSlider() {
+    this.sliderPage -= this.sliderPageSize;
+  }
 }

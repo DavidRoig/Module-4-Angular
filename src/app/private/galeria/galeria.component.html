@@ -4,14 +4,27 @@
     <img #imageSelected [src]="getCurrentUrl()" />
   </div>
   <div class="image-list">
+    <button mat-icon-button aria-label="Back" (click)="backSlider()"
+    [disabled]="sliderPage===0"
+    >
+      <mat-icon>navigate_before</mat-icon>
+    </button>
     <img
-      *ngFor="let image of imageList; index as i"
-      (click)="imageGalerySelected(i)"
+      *ngFor="
+        let image of imageList | slice: sliderPage:sliderPage + 3;
+        index as i
+      "
+      (click)="imageGalerySelected(image)"
       [src]="image?.src"
-      [ngClass]="{'selected': i==imageSelectedIndex}"
+      [class.selected]="image.id === imageList[imageSelectedIndex].id"
       class="image-item"
       alt="miniatura de imagen"
     />
+    <button mat-icon-button aria-label="Next" (click)="nextSlider()"
+    [disabled]="sliderPage+sliderPageSize >imageList.length"
+    >
+      <mat-icon>navigate_next</mat-icon>
+    </button>
   </div>
   <div class="image-actions">
     <button
