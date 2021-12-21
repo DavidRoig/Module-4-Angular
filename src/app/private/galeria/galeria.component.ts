@@ -58,12 +58,16 @@ export class GaleriaComponent {
   play() {
     this.togglePlaying();
     this.imageInterval = setInterval(() => {
-      if (this.imageSelectedIndex === this.imageList.length - 1) {
+      if (this.isLastImage()) {
         this.imageSelectedIndex = this.selectedIndexInitial;
         return;
       }
       this.imageSelectedIndex++;
     }, this.intervalTime);
+  }
+
+  private isLastImage() {
+    return this.imageSelectedIndex === this.imageList.length - 1;
   }
 
   stop() {
