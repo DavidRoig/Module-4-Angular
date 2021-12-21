@@ -22,6 +22,7 @@ import { GaleriaComponent } from './private/galeria/galeria.component';
 import { CrudComponent } from './private/crud/crud.component';
 import { ProfileComponent } from './private/profile/profile.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { RotateDirective } from './directives/rotate.directive';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { FooterComponent } from './layout/footer/footer.component';
     CrudComponent,
     ProfileComponent,
     FooterComponent,
+    RotateDirective,
   ],
   imports: [
     BrowserModule,
