@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(private authService: AuthService) {
     this.isUserLogged = this.authService.isLogged();
 
-    this.authService.getUserLoginEmitter().subscribe(this.setUserLoginStatus);
+    this.authService.getLoginStatusSubject().subscribe(this.setUserLoginStatus);
   }
 
   setUserLoginStatus = (isUserLogged: boolean) => {

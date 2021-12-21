@@ -1,31 +1,38 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { delay, Observable, of, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
+  constructor(private router: Router) {}
 
   private currentUserKey = 'CurrentUser';
-  private loginStatusChanged = new EventEmitter<boolean>();
+  private loginStatusSubject = new Subject<boolean>();
 
-  login(username: string, password: string): boolean {
+  getLoginStatusSubject = () => this.loginStatusSubject;
+
+  login(username: string, password: string): Observable<boolean> {
     if (username !== 'master8@lemoncode.net' || password !== '12345678')
-      return false;
+      return of(false).pipe(delay(2000));
 
+    return of(true).pipe(delay(2000));
+  }
+
+  createUserSession(username: string) {
     localStorage.setItem(this.currentUserKey, username);
-    this.notifyUserLogginStatus();
-    return true;
   }
 
   logout(): void {
     localStorage.removeItem(this.currentUserKey);
-    this.notifyUserLogginStatus();
+    this.notifyUserLoginStatus();
+    this.router.navigate(['/login']);
   }
 
-  private notifyUserLogginStatus() {
-    this.loginStatusChanged.emit(this.isLogged());
-  }
+  notifyUserLoginStatus = () => {
+    this.loginStatusSubject.next(this.isLogged());
+  };
 
   isLogged(): boolean {
     return !!localStorage.getItem(this.currentUserKey);
@@ -34,6 +41,4 @@ export class AuthService {
   getUsername(): string {
     return localStorage.getItem(this.currentUserKey) ?? '';
   }
-
-  getUserLoginEmitter = () => this.loginStatusChanged;
 }

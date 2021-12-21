@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   userControl: FormControl;
   passwordControl: FormControl;
 
+  isLoading: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -49,12 +50,26 @@ export class LoginComponent implements OnInit {
   login() {
     if (!this.loginForm.valid) return;
 
-    const loginResult = this.authService.login(
-      this.userControl.value,
-      this.passwordControl.value
-    );
-    if (loginResult) {
-      this.router.navigate(['/dashboard']);
-    }
+    this.loadingStart();
+    this.authService
+      .login(this.userControl.value, this.passwordControl.value)
+      .subscribe({
+        next: (loginResult: boolean) => {
+          if (loginResult) {
+            this.authService.createUserSession(this.userControl.value);
+            this.authService.notifyUserLoginStatus();
+            this.router.navigate(['/dashboard']);
+          }
+        },
+        complete: () => {
+          this.loadingStop();
+        },
+      });
+  }
+  loadingStop() {
+    this.isLoading = false;
+  }
+  loadingStart() {
+    this.isLoading = true;
   }
 }
